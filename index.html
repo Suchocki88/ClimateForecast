@@ -1,45 +1,385 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Climate Futures Explorer | IPCC AR6</title>
+
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#173044;background:#fff}*{box-sizing:border-box}body{margin:0;padding:16px}.app{max-width:760px;margin:auto;border:1px solid #d9e3ea;border-radius:16px;padding:20px;background:#fff}h2{font-size:1.35rem;margin:0 0 8px}p{line-height:1.5}.intro{margin:0 0 20px;color:#526475}.group{margin:16px 0}.group-title{font-weight:700;margin-bottom:8px}.choices{display:flex;flex-wrap:wrap;gap:8px}button{background:#f5f8fa;color:#173044;border:1px solid #bdccd7;border-radius:9px;padding:10px 13px;font:inherit;cursor:pointer}button[aria-pressed=true]{background:#174c70;color:#fff;border-color:#174c70}button:focus-visible{outline:3px solid #f2b84b;outline-offset:2px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.card{border:1px solid #d9e3ea;border-radius:12px;padding:14px}.card.low{border-top:5px solid #278876}.card.high{border-top:5px solid #d17835}.name{font-size:.88rem;color:#435969}.value{font-size:2rem;font-weight:750;margin:6px 0}.sub{font-size:.78rem;color:#526475}.bar-label{display:flex;justify-content:space-between;gap:8px;font-size:.9rem;margin:13px 0 5px}.track{height:18px;border-radius:9px;background:#e8eef2;overflow:hidden}.fill{height:100%;border-radius:9px;transition:width .25s}.fill.low{background:#278876}.fill.high{background:#d17835}.prompt{background:#f0f6f8;border-radius:12px;padding:13px;margin-top:20px}.prompt strong{display:block;margin-bottom:4px}.foot{font-size:.79rem;color:#526475;margin-top:18px;line-height:1.5}.foot a{color:#145c88}#comparison{font-size:.95rem;margin-top:10px}@media(max-width:440px){.app{padding:14px}.cards{grid-template-columns:1fr}button{flex:1 1 auto}.value{font-size:1.7rem}}
+:root {
+  font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  color: #173044;
+  background: #fff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 16px;
+}
+
+.app {
+  max-width: 760px;
+  margin: auto;
+  border: 1px solid #d9e3ea;
+  border-radius: 16px;
+  padding: 20px;
+  background: #fff;
+}
+
+h2 {
+  font-size: 1.35rem;
+  margin: 0 0 8px;
+}
+
+p { line-height: 1.5; }
+
+.intro {
+  margin: 0 0 20px;
+  color: #526475;
+}
+
+.group { margin: 16px 0; }
+
+.group-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  background: #f5f8fa;
+  color: #173044;
+  border: 1px solid #bdccd7;
+  border-radius: 9px;
+  padding: 10px 13px;
+  font: inherit;
+  cursor: pointer;
+}
+
+button[aria-pressed="true"] {
+  background: #174c70;
+  color: #fff;
+  border-color: #174c70;
+}
+
+button:focus-visible {
+  outline: 3px solid #f2b84b;
+  outline-offset: 2px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.card {
+  border: 1px solid #d9e3ea;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.card.low { border-top: 5px solid #278876; }
+.card.high { border-top: 5px solid #d17835; }
+
+.name {
+  font-size: .88rem;
+  color: #435969;
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: 750;
+  margin: 6px 0;
+}
+
+.sub {
+  font-size: .78rem;
+  color: #526475;
+}
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: .9rem;
+  margin: 13px 0 5px;
+}
+
+.track {
+  height: 18px;
+  border-radius: 9px;
+  background: #e8eef2;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 9px;
+  transition: width .25s;
+}
+
+.fill.low { background: #278876; }
+.fill.high { background: #d17835; }
+
+.prompt {
+  background: #f0f6f8;
+  border-radius: 12px;
+  padding: 13px;
+  margin-top: 20px;
+}
+
+.prompt strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.foot {
+  font-size: .79rem;
+  color: #526475;
+  margin-top: 18px;
+  line-height: 1.5;
+}
+
+.foot a { color: #145c88; }
+
+#comparison {
+  font-size: .95rem;
+  margin-top: 10px;
+}
+
+@media (max-width: 440px) {
+  .app { padding: 14px; }
+  .cards { grid-template-columns: 1fr; }
+  button { flex: 1 1 auto; }
+  .value { font-size: 1.7rem; }
+}
 </style>
 </head>
+
 <body>
+
 <main class="app">
+
 <h2>Climate Futures Explorer</h2>
-<p class="intro">Explore how projected global warming differs across future periods and greenhouse-gas emissions scenarios.</p>
-<div class="group"><div class="group-title">1. Choose a future period</div><div class="choices" id="periods" role="group" aria-label="Future period">
-<button type="button" data-period="0" aria-pressed="false">2021–2040</button><button type="button" data-period="1" aria-pressed="false">2041–2060</button><button type="button" data-period="2" aria-pressed="true">2081–2100</button>
-</div></div>
-<div class="group"><div class="group-title">2. Explore emissions scenarios</div><div class="choices" id="scenarios" role="group" aria-label="Emissions scenario">
-<button type="button" data-scenario="both" aria-pressed="true">Compare both</button><button type="button" data-scenario="low" aria-pressed="false">Low emissions</button><button type="button" data-scenario="high" aria-pressed="false">Very high emissions</button>
-</div></div>
+
+<p class="intro">
+Explore how projected global warming differs across future periods
+and greenhouse-gas emissions scenarios.
+</p>
+
+<div class="group">
+  <div class="group-title">1. Choose a future period</div>
+
+  <div class="choices" id="periods"
+       role="group" aria-label="Future period">
+
+    <button type="button" data-period="0"
+            aria-pressed="false">2021–2040</button>
+
+    <button type="button" data-period="1"
+            aria-pressed="false">2041–2060</button>
+
+    <button type="button" data-period="2"
+            aria-pressed="true">2081–2100</button>
+
+  </div>
+</div>
+
+<div class="group">
+  <div class="group-title">2. Explore emissions scenarios</div>
+
+  <div class="choices" id="scenarios"
+       role="group" aria-label="Emissions scenario">
+
+    <button type="button" data-scenario="both"
+            aria-pressed="true">Compare both</button>
+
+    <button type="button" data-scenario="low"
+            aria-pressed="false">Low emissions</button>
+
+    <button type="button" data-scenario="high"
+            aria-pressed="false">Very high emissions</button>
+
+  </div>
+</div>
+
 <div class="cards" id="cards" aria-live="polite"></div>
-<div class="group"><div class="group-title">Projected global warming</div><div id="bars"></div><div id="comparison" aria-live="polite"></div></div>
-<div class="prompt"><strong>What do you notice?</strong><div id="question"></div></div>
-<div class="foot"><strong>Reading the data:</strong> Temperature changes are in °C relative to the 1850–1900 average. Each value is the IPCC's assessed best estimate for a <strong>20-year period</strong>, not the temperature in a single year. SSP1-2.6 is a low-emissions scenario; SSP5-8.5 is a very-high-emissions scenario. These are conditional projections, not predictions of what people will choose to do.<br><br><strong>Source:</strong> IPCC, Climate Change 2021: The Physical Science Basis, Working Group I, Summary for Policymakers, Table SPM.1. <a href="https://www.ipcc.ch/report/ar6/wg1/" target="_blank" rel="noopener noreferrer">IPCC AR6 report</a>.</div>
+
+<div class="group">
+  <div class="group-title">Projected global warming</div>
+  <div id="bars"></div>
+  <div id="comparison" aria-live="polite"></div>
+</div>
+
+<div class="prompt">
+  <strong>What do you notice?</strong>
+  <div id="question" aria-live="polite"></div>
+</div>
+
+<div class="foot">
+  <strong>Reading the data:</strong>
+  Temperature changes are in °C relative to the 1850–1900 average.
+  Each value is the IPCC's assessed best estimate for a
+  <strong>20-year period</strong>, not the temperature in a single year.
+  SSP1-2.6 is a low-emissions scenario; SSP5-8.5 is a
+  very-high-emissions scenario. These are conditional projections,
+  not predictions of what people will choose to do.
+
+  <br><br>
+
+  <strong>Source:</strong>
+  IPCC, Climate Change 2021: The Physical Science Basis,
+  Working Group I, Summary for Policymakers, Table SPM.1.
+  <a href="https://www.ipcc.ch/report/ar6/wg1/"
+     target="_blank" rel="noopener noreferrer">IPCC AR6 report</a>.
+</div>
+
 </main>
+
 <script>
-(function(){
-'use strict';
-var data=[{period:'2021–2040',low:1.5,high:1.6,question:'The scenarios are nearly identical in the near term. Why might climate systems respond gradually to changes in emissions?'},{period:'2041–2060',low:1.7,high:2.4,question:'The scenarios have begun to diverge. How might differences in greenhouse-gas emissions explain this?'},{period:'2081–2100',low:1.8,high:4.4,question:'How could the larger warming under very high emissions affect Arctic sea ice through the ice–albedo feedback?'}];
-var period=2,scenario='both';
-function render(){
-var d=data[period];
-document.querySelectorAll('[data-period]').forEach(function(b){b.setAttribute('aria-pressed',String(Number(b.dataset.period)===period))});
-document.querySelectorAll('[data-scenario]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.scenario===scenario))});
-var selected=[{key:'low',label:'Low emissions · SSP1-2.6',value:d.low},{key:'high',label:'Very high emissions · SSP5-8.5',value:d.high}].filter(function(x){return scenario==='both'||x.key===scenario});
-document.getElementById('cards').innerHTML=selected.map(function(x){return '<section class="card '+x.key+'"><div class="name">'+x.label+'</div><div class="value">+'+x.value.toFixed(1)+'°C</div><div class="sub">Compared with 1850–1900</div></section>'}).join('');
-document.getElementById('bars').innerHTML=selected.map(function(x){return '<div class="bar-label"><span>'+x.label+'</span><strong>+'+x.value.toFixed(1)+'°C</strong></div><div class="track" role="img" aria-label="'+x.label+': '+x.value.toFixed(1)+' degrees Celsius warming"><div class="fill '+x.key+'" style="width:'+(x.value/5*100)+'%"></div></div>'}).join('');
-document.getElementById('comparison').textContent=scenario==='both'?'Difference between scenarios: '+(d.high-d.low).toFixed(1)+'°C.':'';
-document.getElementById('question').textContent=d.question;
-}
-document.getElementById('periods').addEventListener('click',function(e){var b=e.target.closest('button[data-period]');if(b){period=Number(b.dataset.period);render()}});
-document.getElementById('scenarios').addEventListener('click',function(e){var b=e.target.closest('button[data-scenario]');if(b){scenario=b.dataset.scenario;render()}});
-render();
+(function() {
+  'use strict';
+
+  // Authentic IPCC AR6 projections
+  var data = [
+    { period: '2021–2040', low: 1.5, high: 1.6 },
+    { period: '2041–2060', low: 1.7, high: 2.4 },
+    { period: '2081–2100', low: 1.8, high: 4.4 }
+  ];
+
+  // Reflection questions for all nine combinations
+  var questions = {
+    both: [
+      'The two scenarios differ by only 0.1°C in the near term. Why might their projected temperatures be so similar?',
+      'By mid-century, the scenarios differ by 0.7°C. How might this growing difference affect Earth systems?',
+      'The two scenarios differ by 2.6°C. How might this difference affect Arctic sea ice extent? Explain how the ice–albedo feedback could amplify warming.'
+    ],
+
+    low: [
+      'Even under low emissions, warming reaches 1.5°C. Why does reducing emissions not immediately stop global warming?',
+      'Under low emissions, projected warming is 1.7°C. How might limiting greenhouse-gas emissions help protect Earth systems?',
+      'Under low emissions, warming is projected to reach 1.8°C. Why might Arctic sea ice still be affected?'
+    ],
+
+    high: [
+      'Under very high emissions, warming reaches 1.6°C. What does this tell us about climate change already underway?',
+      'Under very high emissions, warming reaches 2.4°C. What Earth-system changes might become more pronounced?',
+      'Under very high emissions, warming reaches 4.4°C. How could this level of warming influence Arctic sea ice and the ice–albedo feedback?'
+    ]
+  };
+
+  // Default to comparing late-century scenarios
+  var period = 2;
+  var scenario = 'both';
+
+  function render() {
+    var d = data[period];
+
+    // Update selected buttons
+    document.querySelectorAll('[data-period]').forEach(function(b) {
+      b.setAttribute(
+        'aria-pressed',
+        String(Number(b.dataset.period) === period)
+      );
+    });
+
+    document.querySelectorAll('[data-scenario]').forEach(function(b) {
+      b.setAttribute(
+        'aria-pressed',
+        String(b.dataset.scenario === scenario)
+      );
+    });
+
+    // Select displayed scenarios
+    var selected = [
+      {
+        key: 'low',
+        label: 'Low emissions · SSP1-2.6',
+        value: d.low
+      },
+      {
+        key: 'high',
+        label: 'Very high emissions · SSP5-8.5',
+        value: d.high
+      }
+    ].filter(function(x) {
+      return scenario === 'both' || x.key === scenario;
+    });
+
+    // Temperature cards
+    document.getElementById('cards').innerHTML =
+      selected.map(function(x) {
+        return '<section class="card ' + x.key + '">' +
+          '<div class="name">' + x.label + '</div>' +
+          '<div class="value">+' + x.value.toFixed(1) + '°C</div>' +
+          '<div class="sub">Compared with 1850–1900</div>' +
+          '</section>';
+      }).join('');
+
+    // Comparison bars
+    document.getElementById('bars').innerHTML =
+      selected.map(function(x) {
+        return '<div class="bar-label">' +
+          '<span>' + x.label + '</span>' +
+          '<strong>+' + x.value.toFixed(1) + '°C</strong>' +
+          '</div>' +
+          '<div class="track" role="img" aria-label="' +
+          x.label + ': ' + x.value.toFixed(1) +
+          ' degrees Celsius warming">' +
+          '<div class="fill ' + x.key +
+          '" style="width:' + (x.value / 5 * 100) +
+          '%"></div></div>';
+      }).join('');
+
+    // Numerical comparison
+    document.getElementById('comparison').textContent =
+      scenario === 'both'
+        ? 'Difference between scenarios: ' +
+          (d.high - d.low).toFixed(1) + '°C.'
+        : '';
+
+    // NEW: Context-sensitive reflection question
+    document.getElementById('question').textContent =
+      questions[scenario][period];
+  }
+
+  // Future period selection
+  document.getElementById('periods')
+    .addEventListener('click', function(e) {
+      var b = e.target.closest('button[data-period]');
+
+      if (b) {
+        period = Number(b.dataset.period);
+        render();
+      }
+    });
+
+  // Emissions scenario selection
+  document.getElementById('scenarios')
+    .addEventListener('click', function(e) {
+      var b = e.target.closest('button[data-scenario]');
+
+      if (b) {
+        scenario = b.dataset.scenario;
+        render();
+      }
+    });
+
+  // Initialize the interactive
+  render();
+
 })();
 </script>
-</body></html>
+
+</body>
+</html>
